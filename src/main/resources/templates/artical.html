@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>論壇名稱</title>
+    <link rel = 'stylesheet' href="arti.css">
+</head>
+<body>
+    <div class="header">
+        <p class = 'header_title'>
+            LOGO NAME
+        </p>
+    </div>
+    <div class="container">
+        <div class="midbar">
+            <p class="sub">分類搜尋</p>
+            <a href="/">
+                <div class = "color_lump1">
+                    <p class = 'option'>
+                        全部論壇
+                    </p>
+                </div>
+            </a>
+            <a href="/mood">
+                <div class = "color_lump1">
+                    <p class = 'option'>
+                        心情
+                    </p>
+                </div>
+            </a>
+            <a href="/music">
+                <div class = "color_lump1">
+                    <p class = 'option'>
+                        音樂
+                    </p>
+                </div>
+            </a>
+            <a href="/other">
+                <div class = "color_lump1">
+                    <p class = 'option'>
+                        其他
+                    </p>
+                </div>
+            </a>
+            <p class="sub">使用者</p>
+            <div class = "color_lump1">
+                <p class = 'option'>
+                    我的收藏
+                </p>
+            </div>
+            <div class = "color_lump1">
+                <p class = 'option'>
+                    個人設定
+                </p>
+            </div>
+        </div>
+        <div class="contents" th:each="articleList,artStatus : ${articleList}">
+            <div class="title">
+                <div class="ti">
+                    <h1 th:text = "${articleList.Article_Subject}"></h1>
+                    <p>匿名 · <span th:text = "${articleList.Article_Date}"></span></p>
+                    <h2>
+                        <div th:switch="${articleList.Article_Class}">
+                            <span th:case="'other'" class="classes other">其他</span>
+                            <span th:case="'mood'" class="classes mood">心情</span>
+                            <span th:case="'music'" class="classes music">音樂</span>
+                        </div>
+                    </h2>
+                </div>
+            </div>
+            <div class="content">
+                <div class="con_detail">
+                    <p th:text = "${articleList.Article_Content}"></p>
+                </div>
+            </div>
+            <div class="comment">
+                <div class="comment_list">
+                    <p class="sum">留言一覽（<span th:text = "${commentCount}"></span>）</p>
+                    <div class="coms" th:each="commentList,commentStatus : ${commentList}">
+                        <p class="header_detail">#<span th:text = "${commentStatus.count}"></span> 匿名</p>
+                        <p class="comment_text" th:text = "${commentList.Comment_Content}">Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias quibusdam libero ducimus esse, fugiat reprehenderit aliquid repellendus sunt nihil a aspernatur quam, soluta aperiam unde, tenetur in culpa. Veritatis, facilis.</p>
+                        <p class="comment_date" th:text = "${commentList.Date}"></p>
+                        
+                    </div>
+                </div>
+                <div class="form">
+                    <form id="ComSub" onsubmit="return CheckForm();" action="/newCom">
+                        <input type="text" id="newComment" name="newComment" placeholder="留言…">
+                        <input type="hidden" name="id" th:value="${id}">
+                        <button id="sub">送出</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script>
+
+
+function CheckForm(){
+    const formElement = document.getElementById('ComSub');
+    const newComment = formElement[0].value;
+    
+
+    if (newComment == ""){
+        alert("留言不可為空");
+        return false;
+    }
+
+}
+</script>
+
+</html>

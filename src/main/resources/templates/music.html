@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全部論壇</title>
+    <link rel = 'stylesheet' href="inde.css">
+</head>
+<body>
+    <div class="header">
+        <p class = 'header_title'>
+            LOGO NAME
+        </p>
+    </div>
+    <div class="container">
+        <div class="midbar">
+            <p class="sub">分類搜尋</p>
+            <a href="/">
+                <div class = "color_lump1">
+                    <p class = 'option'>
+                        全部論壇
+                    </p>
+                </div>
+            </a>
+            <a href="/mood">
+                <div class = "color_lump1">
+                    <p class = 'option'>
+                        心情
+                    </p>
+                </div>
+            </a>
+            <a href="/music">
+                <div class = "color_lump1">
+                    <p class = 'option'>
+                        音樂
+                    </p>
+                </div>
+            </a>
+            <a href="/other">
+                <div class = "color_lump1">
+                    <p class = 'option'>
+                        其他
+                    </p>
+                </div>
+            </a>
+            <p class="sub">使用者</p>
+            <div class = "color_lump1">
+                <p class = 'option'>
+                    我的收藏
+                </p>
+            </div>
+            <div class = "color_lump1">
+                <p class = 'option'>
+                    個人設定
+                </p>
+            </div>
+        </div>
+        <div class="subjects">
+            <div class="title">
+                <h1>全部論壇</h1>
+                <p><span th:text = ${articleCount}></span> 篇論壇</p>
+            </div>
+            
+
+            <div class="lists" th:each="articleList,artStatus : ${articleList}" >
+                
+                <a th:href="@{artical(id=${articleList.Article_ID})}">
+                    <div class="list">
+                        <h2>
+                            <div th:switch="${articleList.Article_Class}">
+                                <span th:case="'other'" class="classes other">其他</span>
+                                <span th:case="'mood'" class="classes mood">心情</span>
+                                <span th:case="'music'" class="classes music">音樂</span>
+                            </div>
+                            <span th:text = "${articleList.Article_Subject}"></span>
+                        </h2>
+                        
+                        <!--
+                        <p class="content" th:text = "${artStatus.count}"></p>
+                        -->
+
+                        <p class="content" th:text = "${articleList.Article_Content}"></p>
+                        <div class="comments">
+                            <div class="comment" >
+                                <img src="./img/comment-alt.svg" alt="">
+                                <p th:text = "${articleList.commentCount}"></p>
+                            </div>
+                            <p class="date" th:text = "${articleList.Article_Date}"></p>
+                        </div>
+                    </div>
+                </a>
+                
+            </div>
+        </div>
+        <div id="btn">
+            <img src="./img/pen.svg" alt="" width="25px" height="25px">
+        </div>
+    </div>
+    <div id="alert">
+        <div class="alert_content">
+            <div class="title">
+                <h1>發表新論壇</h1>
+                <h1 class="close" id="close">×</h1>
+            </div>
+            <form id="ComSub" onsubmit="return CheckForm();" method="get" action="/result">
+                <h2>論壇分類</h2>
+                <div class="radios">
+                    <input type="radio" id="mood" name="fav_language" value="mood">
+                    <label for="mood">心情</label><br>
+                    <input type="radio" id="music" name="fav_language" value="music">
+                    <label for="music">音樂</label><br>
+                    <input type="radio" id="other" name="fav_language" value="other">
+                    <label for="other">其他</label>
+                </div>
+                <h2>論壇主題</h2>
+                <input type="text" id="subject" name="subject">
+                <h2>論壇內容</h2>
+                <textarea id="content" name="content"></textarea>
+                <div class="btns">
+                    <button id="btn_cancel">取消</button>
+                    <button id="btn_submit">送出</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script>
+    
+    $("#btn").click(
+        function(){
+            $("#alert").css("top","0");
+        }
+    );
+    $("#close").click(
+        function(){
+            $("#alert").css("top","-100%");
+        }
+    );
+    $("#btn_cancel").click(
+        function(){
+            $("#alert").css("top","-100%");
+            return false;
+        }
+    );
+
+    function CheckForm(){
+        const formElement = document.getElementById('ComSub');
+        const newSubject = formElement[3].value;
+        const newComment = formElement[4].value;
+        const music = document.getElementById("music").checked;
+        const mood = document.getElementById("mood").checked;
+        const other = document.getElementById("other").checked;
+
+        if (music == false && mood == false && other == false){
+            
+            alert("請選擇主題");
+            return false;
+        }else if(newSubject == "" || newComment == ""){
+            
+            alert("請輸入內文");
+            return false;
+        }else{
+            alert("上傳成功");
+            return true;
+        }
+}
+</script>
+</html>
