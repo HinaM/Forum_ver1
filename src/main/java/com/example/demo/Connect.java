@@ -62,8 +62,8 @@ public class Connect {
 		ArrayList arr2 = new ArrayList();
 		ArrayList arr3 = new ArrayList();
 		
-		String sql3 = "SELECT Article_ID FROM Article";
-		String sql2 = "SELECT * FROM Comment WHERE Article_ID = ";
+		String sql3 = "SELECT Article_ID FROM article";
+		String sql2 = "SELECT * FROM comment WHERE Article_ID = ";
         List<Map<String, Object>> list =  jdbcTemplate.queryForList(sql3);
 		int si = list.size();
 		
@@ -162,9 +162,9 @@ public class Connect {
 		ArrayList arr2 = new ArrayList();
 		ArrayList arr3 = new ArrayList();
 		
-		String sql3 = "SELECT * FROM Article WHERE Article_Class = 'mood'";
+		String sql3 = "SELECT * FROM article WHERE Article_Class = 'mood'";
 		
-		String sql2 = "SELECT * FROM Comment WHERE Article_ID = ";
+		String sql2 = "SELECT * FROM comment WHERE Article_ID = ";
         List<Map<String, Object>> list =  jdbcTemplate.queryForList(sql3);
 		
 		for(int i =0 ; i<list.size(); i++){
@@ -203,9 +203,9 @@ public class Connect {
 		
 		ArrayList arr3 = new ArrayList();
 		
-		String sql3 = "SELECT * FROM Article WHERE Article_Class = 'music'";
+		String sql3 = "SELECT * FROM article WHERE Article_Class = 'music'";
 		
-		String sql2 = "SELECT * FROM Comment WHERE Article_ID = ";
+		String sql2 = "SELECT * FROM comment WHERE Article_ID = ";
         List<Map<String, Object>> list =  jdbcTemplate.queryForList(sql3);
 		
 		for(int i =0 ; i<list.size(); i++){
@@ -242,9 +242,9 @@ public class Connect {
 		
 		ArrayList arr3 = new ArrayList();
 		
-		String sql3 = "SELECT * FROM Article WHERE Article_Class = 'other'";
+		String sql3 = "SELECT * FROM article WHERE Article_Class = 'other'";
 		
-		String sql2 = "SELECT * FROM Comment WHERE Article_ID = ";
+		String sql2 = "SELECT * FROM comment WHERE Article_ID = ";
         List<Map<String, Object>> list =  jdbcTemplate.queryForList(sql3);
 		
 		for(int i =0 ; i<list.size(); i++){
@@ -275,5 +275,8 @@ public class Connect {
 		
 		return model;
 	}
+	
+
+	
 	
 }
